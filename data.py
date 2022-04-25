@@ -19,12 +19,18 @@
 
 import requests
 import json
+import html
 
-open_trivia_api = "https://opentdb.com/api.php?amount=10&type=boolean"
-data = requests.get(url=open_trivia_api).json()
+parameters = {
+    "amount": 10,
+    "type": "boolean"
+}
+
+open_trivia_api = "https://opentdb.com/api.php"
+data = requests.get(url=open_trivia_api,params=parameters).json()
 #print(data)
 
-question_data = [{"text": item["question"], "answer": item["correct_answer"]} for item in data["results"]]
+question_data = [{"text": html.unescape(item["question"]), "answer": item["correct_answer"]} for item in data["results"]]
 #print(json.dumps(question_data, indent=3))
 
 
